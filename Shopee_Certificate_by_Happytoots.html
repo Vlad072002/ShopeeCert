@@ -164,6 +164,7 @@
             height: 150px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
+            z-index: 1;
         }
 
         .certificate::before {
@@ -175,6 +176,10 @@
             right: -75px;
         }
 
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+        }
 
         .certificate-header h1 {
             font-size: 2.8em;
@@ -198,9 +203,23 @@
             box-shadow: 0 0 25px rgba(0,0,0,0.2);
         }
 
+        .certificate-body .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
         .certificate-body h2 {
             font-size: 2em;
             font-weight: 600;
+            margin: 0;
+        }
+
+        .medal-icon {
+            width: 50px;
+            height: 50px;
         }
 
         .reason {
@@ -210,6 +229,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            height: 40px; /* Give it a fixed height to prevent layout shifts */
         }
         
         /* Container for the achievement badges */
@@ -219,16 +239,17 @@
             gap: 15px;
             margin-top: 30px;
             flex-wrap: wrap;
+            min-height: 50px; /* Give it a fixed height */
         }
 
         /* Individual achievement badges */
         .badge {
             background-color: rgba(255, 255, 255, 0.9);
             color: #ee4d2d;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-weight: 600;
-            font-size: 0.9em;
+            font-size: 1.1em;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-shadow: none;
         }
@@ -241,7 +262,35 @@
             font-weight: bold;
             opacity: 0.8;
             transform: rotate(-5deg);
+            z-index: 3;
         }
+
+        /* Confetti styles and animation */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #f1c40f; /* Gold */
+            opacity: 0.9;
+            top: -50px; /* Start off-screen */
+            animation: confetti-fall 5s linear infinite;
+            z-index: 0;
+        }
+        .confetti:nth-child(2) { background-color: #3498db; animation-delay: 0.5s; }
+        .confetti:nth-child(3) { background-color: #e74c3c; animation-delay: 1s; }
+        .confetti:nth-child(4) { background-color: #2ecc71; animation-delay: 1.5s; }
+        .confetti:nth-child(5) { background-color: #9b59b6; animation-delay: 2s; }
+        .confetti:nth-child(6) { background-color: #1abc9c; animation-delay: 2.5s; }
+        .confetti:nth-child(7) { background-color: #f39c12; animation-delay: 3s; }
+        .confetti:nth-child(8) { background-color: #34495e; animation-delay: 3.5s; }
+        .confetti:nth-child(9) { background-color: #ecf0f1; animation-delay: 4s; }
+        .confetti:nth-child(10){ background-color: #e67e22; animation-delay: 4.5s; }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(120vh) rotate(720deg); }
+        }
+
     </style>
 </head>
 <body>
@@ -251,8 +300,8 @@
 
     <!-- The upload area -->
     <div class="upload-container">
-        <!-- **** THE IMAGE SOURCE HAS BEEN UPDATED HERE **** -->
-        <img id="background-image" src="https://drive.google.com/file/d/1m4yoY8BEjG-5qqOcch0HMa7S96wag8Of/view?usp=sharing" alt="Shopee Background">
+        <!-- **** THE IMAGE SOURCE HAS BEEN CORRECTED FOR DIRECT EMBEDDING **** -->
+        <img id="background-image" src="https://drive.google.com/uc?export=view&id=1m4yoY8BEjG-5qqOcch0HMa7S96wag8Of" alt="Shopee Background">
         <img id="uploaded-image" src="#" alt="Your Uploaded Photo">
         <label for="photo-upload" id="upload-label">Upload Your Photo</label>
         <input type="file" id="photo-upload" accept="image/*">
@@ -266,25 +315,36 @@
 
     <!-- The certificate container, initially hidden -->
     <div id="certificate-container" class="certificate">
-        <div class="certificate-header">
-            <h1>Certificate of Loyalty</h1>
-            <p>This certificate is proudly presented </p>
-        </div>
-        <img id="certificate-photo" class="awardee-photo" src="#" alt="Awardee Photo">
-        <div class="certificate-body">
-            <h2>Ultimate Shopee Loyalist</h2>
-            <p class="reason">"Para sa mga Certified Shopee Ninjas nang uubos ng Stock at Certified Marites."</p>
-            <div class="badges">
-                <span class="badge">Magpapabudol Padin kay Happytots</span>
-                <span class="badge">SPaylater is Life</span>
-                <span class="badge">Walang Tulugan habang may Sale</span>
-                <span class="badge">Pambansang Checkouter</span>
-                <span class="badge">Certified Shopee Ninja</span>
-                <span class="badge">Promoted in Platinum</span>
+        <!-- New Confetti elements -->
+        <div class="confetti" style="left: 10%;"></div>
+        <div class="confetti" style="left: 20%;"></div>
+        <div class="confetti" style="left: 30%;"></div>
+        <div class="confetti" style="left: 40%;"></div>
+        <div class="confetti" style="left: 50%;"></div>
+        <div class="confetti" style="left: 60%;"></div>
+        <div class="confetti" style="left: 70%;"></div>
+        <div class="confetti" style="left: 80%;"></div>
+        <div class="confetti" style="left: 90%;"></div>
+        <div class="confetti" style="left: 95%;"></div>
+
+        <div class="certificate-content">
+            <div class="certificate-header">
+                <h1>Certificate of Loyalty</h1>
+                <p>For outstanding achievement as a</p>
+            </div>
+            <img id="certificate-photo" class="awardee-photo" src="#" alt="Awardee Photo">
+            <div class="certificate-body">
+                <div class="title-container">
+                    <svg class="medal-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FFA500"/></linearGradient></defs><path d="M16 4a9 9 0 017.938 13.062L24 28l-8-5-8 5 1.062-10.938A9 9 0 0116 4z" fill="url(#a)"/><path d="M16 6a7 7 0 100 14 7 7 0 000-14z" fill="#FFF" opacity=".5"/></svg>
+                    <!-- This H2 will now hold the random title -->
+                    <h2 id="random-title"></h2>
+                </div>
+                 <!-- This P tag is now a placeholder for the single, random reason -->
+                <p class="reason" id="random-reason"></p>
             </div>
         </div>
         <div class="shopee-logo">
-            Shopee
+            Happytots
         </div>
     </div>
 
@@ -297,6 +357,23 @@
         const downloadBtn = document.getElementById('download-btn');
         const certificateContainer = document.getElementById('certificate-container');
         const certificatePhoto = document.getElementById('certificate-photo');
+        const randomTitle = document.getElementById('random-title');
+        const randomReason = document.getElementById('random-reason');
+
+
+        // *** NEW ARRAY OF AWARD TITLES AND REASONS ***
+        const awards = [
+            { title: "Ampao Abangers", reason: "Tahimik pero laging naka abang sa Ampao." },
+            { title: "Ninja ng Piso Deals", reason: "mga pinalad sa Piso deals at flash deal." },
+            { title: "Certified Marites", reason: "Laging updated sa chissmiss lalo nasa mga costumer nila." },
+            { title: "Taga-Ubos ng Stock", reason: "Matinding kalaban ni Putin at Gloiza." },
+            { title: "Silent Hoarder", reason: "Tahimik sa Sale pero madaming parating na order." },
+            { title: "Silent But Deadly Budol", reason: "Kahit tulog na check out ." },
+            { title: "Certified Platinum Member", reason: "Order ng Order kahit wala ng pambayad." },
+            { title: "Buy Now Stress later", reason: "When Spaylater in Life ." },
+            { title: "The unstoppable checkouter", reason: "Di natutulog hanggat walang check out." },
+            { title: "Braviest checkouter", reason: " Mag check out kahit walang pambayad   ."}
+        ];
 
         // Listen for when a user selects a file
         photoUpload.addEventListener('change', (event) => {
@@ -304,54 +381,46 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    // Get the image data URL
                     const imageUrl = e.target.result;
-
-                    // Show the uploaded image in the top circular frame
                     uploadedImage.src = imageUrl;
                     uploadedImage.style.display = 'block';
-
-                    // Set the same image for the certificate photo
                     certificatePhoto.src = imageUrl;
-
-                    // Hide the upload button text
                     uploadLabel.style.display = 'none';
-
-                    // Show the "Generate Certificate" button
                     generateBtn.style.display = 'inline-block';
                 };
-                // Read the file as a Data URL
                 reader.readAsDataURL(file);
             }
         });
 
         // Listen for clicks on the "Generate" button
         generateBtn.addEventListener('click', () => {
-            // Display the certificate
-            certificateContainer.style.display = 'block';
             
-            // Display the download button
+            // *** NEW LOGIC TO PICK A RANDOM AWARD ***
+            // Pick a random award object from the array
+            const randomIndex = Math.floor(Math.random() * awards.length);
+            const selectedAward = awards[randomIndex];
+            
+            // Set the text of the title and reason
+            randomTitle.textContent = selectedAward.title;
+            randomReason.textContent = `"${selectedAward.reason}"`;
+
+            // Display the certificate and download button
+            certificateContainer.style.display = 'block';
             downloadBtn.style.display = 'inline-block';
 
-            // Scroll the certificate into view for a smooth user experience
+            // Scroll the certificate into view
             certificateContainer.scrollIntoView({ behavior: 'smooth' });
         });
         
         // Listen for clicks on the "Download" button
         downloadBtn.addEventListener('click', () => {
-            // Use html2canvas to capture the certificate div
             html2canvas(certificateContainer, { 
-                // improve quality of the screenshot
                 scale: 2,
                 useCORS: true
             }).then(canvas => {
-                // Create a temporary link element
                 const link = document.createElement('a');
-                // Set the download attribute with a filename
-                link.download = 'My_Shopee_Loyalist_Certificate.png';
-                // Convert the canvas to a PNG image data URL and set it as the href
+                link.download = 'My_Happytots_Loyalist_Certificate.png';
                 link.href = canvas.toDataURL('image/png');
-                // Trigger a click on the link to start the download
                 link.click();
             });
         });
